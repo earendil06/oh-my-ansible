@@ -3,7 +3,22 @@
   tasks:
   - name: run the new module
     file_properties:
-      input: 'myFile.properties'
+      output: "result.properties"
+      key_val:
+        key1: val1
+        key2: val2
+        key3: val3
+      comment:
+        - key2
+  - name: run the new module 2
+    file_properties:
+      input: "myFile.properties"
       output: "result.properties"
       comment:
+        - key2
+      uncomment:
         - key1
+      remove:
+        - key3
+      key_val:
+        another.key: anotherValue

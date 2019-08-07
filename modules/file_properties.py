@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Copyright: (c) 2018, Terry Jones <terry.jones@example.org>
+# Copyright: (c) 2019, Florent Pastor <flopastor06@gmail.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 ANSIBLE_METADATA = {
@@ -11,59 +11,71 @@ ANSIBLE_METADATA = {
 
 DOCUMENTATION = '''
 ---
-module: my_test
+module: file_properties
 
-short_description: This is my test module
+short_description: This module is used to manage .properties files mostly used in Java configuration projects
 
 version_added: "2.4"
 
 description:
-    - "This is my longer description explaining my test module"
+    - "This module is used to manage .properties files mostly used in Java configuration projects"
 
 options:
-    name:
+    output:
         description:
-            - This is the message to send to the test module
+            - This is the output generated file .properties
         required: true
-    new:
+    input:
         description:
-            - Control to demo if the result of this module is changed or not
+            - This is a file you can start with, and manipulate it as a set of initial properties
         required: false
-
-extends_documentation_fragment:
-    - azure
+    key_val:
+        description:
+            - The key-val pairs to add or modify
+        required: false
+    comment:
+        description:
+            - The keys to comment
+        required: false
+    uncomment:
+        description:
+            - The keys to uncomment
+        required: false
+    remove:
+        description:
+            - The keys to remove
+        required: false    
 
 author:
-    - Your Name (@yourhandle)
+    - Florent Pastor (flopastor06@gmail.com)
 '''
 
 EXAMPLES = '''
 # Pass in a message
-- name: Test with a message
-  my_test:
-    name: hello world
-
-# pass in a message and have changed true
-- name: Test with a message and changed output
-  my_test:
-    name: hello world
-    new: true
-
-# fail the module
-- name: Test failure of the module
-  my_test:
-    name: fail me
+- name: run the new module
+  file_properties:
+    output: "result.properties"
+    key_val:
+      key1: val1
+      key2: val2
+      key3: val3
+    comment:
+      - key2
+- name: run the new module 2
+  file_properties:
+    input: "myFile.properties"
+    output: "result.properties"
+    comment:
+      - key2
+    uncomment:
+      - key1
+    remove:
+      - key3
+    key_val:
+      another.key: anotherValue
 '''
 
 RETURN = '''
-original_message:
-    description: The original name param that was passed in
-    type: str
-    returned: always
-message:
-    description: The output message that the test module generates
-    type: str
-    returned: always
 '''
 
 from ansible.module_utils.basic import AnsibleModule
