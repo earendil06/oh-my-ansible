@@ -1,0 +1,9 @@
+- name: test my new module
+  hosts: localhost
+  tasks:
+  - name: run the new module
+    file_properties:
+      input: 'myFile.properties'
+      output: "result.properties"
+      comment:
+        - key1

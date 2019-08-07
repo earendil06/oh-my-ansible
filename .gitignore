@@ -1,0 +1,4 @@
+ansible-repo/
+ansible
+venv/
+.idea/
